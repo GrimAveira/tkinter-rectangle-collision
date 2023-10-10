@@ -2,18 +2,47 @@ import tkinter as tk
 
 
 class RectangleCollision:
-    def __init__(self, width=800, height=600):
+    def __init__(self, width=800, height=300):
+
         self.width = width
         self.height = height
         self.root = tk.Tk()
         self.root.geometry(f"{self.width}x{self.height}")
         self.root.title("Rectangle Collision")
+
+        self.rec1_mass_label = tk.Label(
+            text="Масса объекта слева", font='Calibri 11')
+        self.rec1_mass_label.grid(column=0, row=0)
+        self.rec1_mass_entry = tk.Entry(width=20)
+        self.rec1_mass_entry.grid(column=0, row=1)
+
+        self.rec2_mass_label = tk.Label(
+            text="Масса объекта справа", font='Calibri 11')
+        self.rec2_mass_label.grid(column=1, row=0)
+        self.rec2_mass_entry = tk.Entry(width=20)
+        self.rec2_mass_entry.grid(column=1, row=1)
+
+        self.rec1_velocity_label = tk.Label(
+            text="Скорость объекта слева", font='Calibri 11')
+        self.rec1_velocity_label.grid(column=2, row=0)
+        self.rec1_velocity_entry = tk.Entry(width=20)
+        self.rec1_velocity_entry.grid(column=2, row=1)
+
+        self.rec2_velocity_label = tk.Label(
+            text="Скорость объекта справа", font='Calibri 11')
+        self.rec2_velocity_label.grid(column=3, row=0)
+        self.rec2_velocity_entry = tk.Entry(width=20)
+        self.rec2_velocity_entry.grid(column=3, row=1)
+
+        self._acceptButton = tk.Button(
+            self.root, text="Применить данные и запустить коллизию", command=self.button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
+        self._acceptButton.grid(
+            column=0, row=4, columnspan=4, padx=10, pady=10)
+
         self.canvas = tk.Canvas(
             self.root, width=self.width, height=self.height, bg="white")
-        self.canvas.pack()
+        self.canvas.grid(column=0, row=5, columnspan=4)
         self.rectangles = []
-        self.create_rectangle(50, 50, 100, 100, 4, [0.03, 0], "aqua")
-        self.create_rectangle(400, 50, 450, 100, 1, [-0.02, 0], "black")
 
         self.main_menu = tk.Menu()
         self.main_menu.add_cascade(label="File")
@@ -21,6 +50,16 @@ class RectangleCollision:
         self.main_menu.add_cascade(label="View")
 
         self.root.config(menu=self.main_menu)
+
+        self.root.bind('<Escape>', self.close_app)
+
+    def button_create_handler(self):
+        self.rectangles = []
+        self.create_rectangle(150, 150, 200, 200, int(self.rec1_mass_entry.get()), [
+                              int(self.rec1_velocity_entry.get())/100, 0], "aqua")
+        self.create_rectangle(600, 150, 650, 200, int(self.rec2_mass_entry.get()), [
+                              -int(self.rec2_velocity_entry.get())/100, 0], "black")
+        self.start_collision()
 
     def create_rectangle(self, x1, y1, x2, y2, mass, velocity, color):
         rectangle = {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2,
@@ -58,14 +97,20 @@ class RectangleCollision:
                 rectangle['x1'], rectangle['y1'], rectangle['x2'], rectangle['y2'], fill=rectangle['color'], tags="4")
         self.canvas.update()
 
-    def run(self):
+    def start_collision(self):
         while True:
             self.update_rectangles()
             self.check_collisions()
             self.draw_rectangles()
 
+    def start_app(self):
+        self.root.mainloop()
 
-if __name__ == '__main__':
-    app = RectangleCollision()
-    app.run()
-    app.root.mainloop()
+    def close_app(self, _):
+        """Destroy tkinter application.
+
+        Keyword arguments:
+        self -- the mandatory default argument (default self)
+
+        """
+        self.root.destroy()
