@@ -1,5 +1,5 @@
 import re
-from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry
+from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry, messagebox
 
 
 class RectangleCollision:
@@ -11,6 +11,7 @@ class RectangleCollision:
         self.__root = Tk()
         self.__root.geometry(f"{self.__width}x{self.__height}")
         self.__root.title("Rectangle Collision")
+        self.__root.option_add("*tearOff", False)
 
         # error label
         self.__errmsg = StringVar()
@@ -46,7 +47,7 @@ class RectangleCollision:
 
         # button for start action
         self.__acceptButton = Button(
-            self.__root, text="Accept data and start collision", command=self.button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
+            self.__root, text="Accept data and start collision", command=self.__button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
         self.__acceptButton.grid(
             column=0, row=4, columnspan=4, padx=10, pady=10)
 
@@ -57,17 +58,28 @@ class RectangleCollision:
         self.__rectangles = []
 
         # menu header
-        self.__main_menu = Menu()
-        self.__main_menu.add_cascade(label="help")
-        self.__main_menu.add_cascade(label="version")
+        self.__main_menu = Menu(self.__root)
+        self.__main_menu.add_command(label="About", command=self.__about)
+        self.__main_menu.add_command(label="Version", command=self.__version)
 
         self.__root.config(menu=self.__main_menu)
 
         # bind for close app
         self.__root.bind('<Escape>', self.__close_app)
 
-    def button_create_handler(self):
-        """Button to start the collision.
+    def __about(self):
+        """Show info about app.
+        """
+        messagebox.showinfo(
+            "About", "A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity")
+
+    def __version(self):
+        """Show info about version app.
+        """
+        messagebox.showinfo("Version", "v0.0.1")
+
+    def __button_create_handler(self):
+        """Accept entry data and start the collision.
         """
 
         mass1 = self.__rec1_mass_entry.get()
@@ -164,7 +176,7 @@ class RectangleCollision:
             self.__check_collisions()
             self.__draw_rectangles()
 
-    def __close_app(self):
+    def __close_app(self, _):
         """Destroy tkinter application.
         """
 
