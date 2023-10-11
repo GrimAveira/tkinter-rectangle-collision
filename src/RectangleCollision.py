@@ -15,10 +15,9 @@ class RectangleCollision:
 
         # error label
         self.__errmsg = StringVar()
-        error__label = Label(
-            foreground="red", textvariable=self.__errmsg, wraplength=250)
-        error__label.grid(
-            column=0, row=5, columnspan=4, padx=10, pady=10)
+        self.__error__label = Label(
+            foreground="red", textvariable=self.__errmsg, wraplength=250, font='Calibri 11')
+        self.__error__label.grid(column=0, row=5, columnspan=4)
 
         # labels and entry for mass and velocity
         self.__rec1_mass_label = Label(
@@ -70,12 +69,14 @@ class RectangleCollision:
     def __about(self):
         """Show info about app.
         """
+
         messagebox.showinfo(
             "About", "A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity")
 
     def __version(self):
         """Show info about version app.
         """
+
         messagebox.showinfo("Version", "v0.0.1")
 
     def __button_create_handler(self):
@@ -86,7 +87,7 @@ class RectangleCollision:
         mass2 = self.__rec1_mass_entry.get()
         vel1 = self.__rec1_velocity_entry.get()
         vel2 = self.__rec2_velocity_entry.get()
-        if (self.__entry_input_validate(mass1) and self.__entry_input_validate(mass2) and self.__entry_input_validate(vel1) and self.__entry_input_validate(vel2)):
+        if (self._entry_input_validate(mass1) and self._entry_input_validate(mass2) and self._entry_input_validate(vel1) and self._entry_input_validate(vel2)):
             self.__rectangles = []
             self.__create_rectangle(150, 100, 200, 150, int(mass1), [
                 int(vel1)/100, 0], "aqua")
@@ -94,13 +95,14 @@ class RectangleCollision:
                 -int(vel2)/100, 0], "black")
             self.__start_collision()
 
-    def __entry_input_validate(self, input_value):
+    def _entry_input_validate(self, input_value):
         """Destroy tkinter application.
 
         Keyword arguments:
         input_value:str -- the entry argument of the field to be validated
 
         """
+
         result = re.match("^[1-9]{1}$", input_value) is not None
         if not result and len(input_value) <= 12:
             self.__errmsg.set(
