@@ -1,3 +1,4 @@
+import re
 import tkinter as tk
 
 
@@ -9,6 +10,13 @@ class RectangleCollision:
         self.root = tk.Tk()
         self.root.geometry(f"{self.width}x{self.height}")
         self.root.title("Rectangle Collision")
+
+        self.errmsg = tk.StringVar()
+
+        error_label = tk.Label(
+            foreground="red", textvariable=self.errmsg, wraplength=250)
+        error_label.grid(
+            column=0, row=5, columnspan=4, padx=10, pady=10)
 
         self.rec1_mass_label = tk.Label(
             text="Масса объекта слева", font='Calibri 11')
@@ -41,7 +49,7 @@ class RectangleCollision:
 
         self.canvas = tk.Canvas(
             self.root, width=self.width, height=self.height, bg="white")
-        self.canvas.grid(column=0, row=5, columnspan=4)
+        self.canvas.grid(column=0, row=6, columnspan=4)
         self.rectangles = []
 
         self.main_menu = tk.Menu()
@@ -54,12 +62,26 @@ class RectangleCollision:
         self.root.bind('<Escape>', self.close_app)
 
     def button_create_handler(self):
-        self.rectangles = []
-        self.create_rectangle(150, 150, 200, 200, int(self.rec1_mass_entry.get()), [
-                              int(self.rec1_velocity_entry.get())/100, 0], "aqua")
-        self.create_rectangle(600, 150, 650, 200, int(self.rec2_mass_entry.get()), [
-                              -int(self.rec2_velocity_entry.get())/100, 0], "black")
-        self.start_collision()
+        mass1 = self.rec1_mass_entry.get()
+        mass2 = self.rec1_mass_entry.get()
+        vel1 = self.rec1_velocity_entry.get()
+        vel2 = self.rec2_velocity_entry.get()
+        if (self.entry_input_validate(mass1) and self.entry_input_validate(mass2) and self.entry_input_validate(vel1) and self.entry_input_validate(vel2)):
+            self.rectangles = []
+            self.create_rectangle(150, 100, 200, 150, int(mass1), [
+                int(vel1)/100, 0], "aqua")
+            self.create_rectangle(600, 100, 650, 150, int(mass2), [
+                -int(vel2)/100, 0], "black")
+            self.start_collision()
+
+    def entry_input_validate(self, input_value):
+        result = re.match("^[1-9]{1}$", input_value) is not None
+        if not result and len(input_value) <= 12:
+            self.errmsg.set(
+                "Каждое поле для ввода должно быть заполнено цифрой от 1 до 9")
+        else:
+            self.errmsg.set("")
+        return result
 
     def create_rectangle(self, x1, y1, x2, y2, mass, velocity, color):
         rectangle = {'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2,
