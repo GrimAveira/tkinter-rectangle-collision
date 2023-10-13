@@ -3,7 +3,7 @@ from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry, messagebo
 
 
 class RectangleCollision:
-    def __init__(self, width=800, height=300):
+    def __init__(self, width=800, height=300, about="", version="", help=""):
 
         # window options
         self.__width = width
@@ -11,7 +11,6 @@ class RectangleCollision:
         self.__root = Tk()
         self.__root.geometry(f"{self.__width}x{self.__height}")
         self.__root.title("Rectangle Collision")
-        self.__root.option_add("*tearOff", False)
 
         # error label
         self.__errmsg = StringVar()
@@ -57,8 +56,12 @@ class RectangleCollision:
         self.__rectangles = []
 
         # menu header
+        self.__about_message = about
+        self.__version_message = version
+        self.__help_message = help
         self.__main_menu = Menu(self.__root)
         self.__main_menu.add_command(label="About", command=self.__about)
+        self.__main_menu.add_command(label="Help", command=self.__help)
         self.__main_menu.add_command(label="Version", command=self.__version)
 
         self.__root.config(menu=self.__main_menu)
@@ -70,21 +73,26 @@ class RectangleCollision:
         """Show info about app.
         """
 
-        messagebox.showinfo(
-            "About", "A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity")
+        messagebox.showinfo("About", self.__about_message)
+
+    def __help(self):
+        """Show usage information.
+        """
+
+        messagebox.showinfo("Help", self.__help_message)
 
     def __version(self):
         """Show info about version app.
         """
 
-        messagebox.showinfo("Version", "v0.0.1")
+        messagebox.showinfo("Version", self.__version_message)
 
     def __button_create_handler(self):
         """Accept entry data and start the collision.
         """
 
         mass1 = self.__rec1_mass_entry.get()
-        mass2 = self.__rec1_mass_entry.get()
+        mass2 = self.__rec2_mass_entry.get()
         vel1 = self.__rec1_velocity_entry.get()
         vel2 = self.__rec2_velocity_entry.get()
         if (self._entry_input_validate(mass1) and self._entry_input_validate(mass2) and self._entry_input_validate(vel1) and self._entry_input_validate(vel2)):
@@ -104,7 +112,7 @@ class RectangleCollision:
         """
 
         result = re.match("^[1-9]{1}$", input_value) is not None
-        if not result and len(input_value) <= 12:
+        if not result:
             self.__errmsg.set(
                 "Each input field must be filled with a number from 1 to 9")
         else:
