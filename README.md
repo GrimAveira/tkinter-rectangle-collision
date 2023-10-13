@@ -1,8 +1,8 @@
 # tkinter rectangle-collision
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/grimaveira/tkinter-resize-inputed-text-app/python-app.yml?label=Build%20and%20tests)
-![GitHub repo size](https://img.shields.io/github/repo-size/grimaveira/tkinter-resize-inputed-text-app)
-![GitHub release (with filter)](https://img.shields.io/github/v/release/grimaveira/tkinter-resize-inputed-text-app)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/grimaveira/tkinter-rectangle-collision/python-app.yml?label=Build%20and%20tests&link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision%2Factions%2Fworkflows%2Fpython-app.yml)
+![GitHub repo size](https://img.shields.io/github/repo-size/grimaveira/tkinter-rectangle-collision?link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/grimaveira/tkinter-rectangle-collision?link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision%2Freleases)
 
 ## Content
 
@@ -16,7 +16,7 @@
 
 A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity
 
-![Watch the video](./AppPreview.gif)
+![Watch the video](./img/RectangleCollision.gif)
 
 ## How to install and start
 
