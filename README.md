@@ -1,8 +1,8 @@
 # tkinter rectangle-collision
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/grimaveira/tkinter-rectangle-collision/python-app.yml?label=Build%20and%20tests&link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision%2Factions%2Fworkflows%2Fpython-app.yml)
-![GitHub repo size](https://img.shields.io/github/repo-size/grimaveira/tkinter-rectangle-collision?link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision)
-![GitHub release (with filter)](https://img.shields.io/github/v/release/grimaveira/tkinter-rectangle-collision?link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision%2Freleases)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/grimaveira/tkinter-rectangle-collision/python-app.yml)](https://github.com/GrimAveira/tkinter-rectangle-collision/actions)
+[![GitHub repo size](https://img.shields.io/github/repo-size/grimaveira/tkinter-resize-inputed-text-app)](https://github.com/GrimAveira/tkinter-rectangle-collision)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/grimaveira/tkinter-rectangle-collision?link=https%3A%2F%2Fgithub.com%2FGrimAveira%2Ftkinter-rectangle-collision%2Freleases)](https://github.com/GrimAveira/tkinter-rectangle-collision/releases/tag/v0.0.3)
 
 ## Content
 
