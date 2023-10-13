@@ -2,16 +2,23 @@ import re
 from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry, messagebox
 
 
-class RectangleCollision:
-    def __init__(self, width=800, height=300):
+class RectangleCollision(Tk):
+    """Class TextSplitter used to create a tkinter application
+
+    Shows the interaction of two rectangles with the entered data
+
+    Note:
+        There may be problems with setting large values in the fields
+    """
+
+    def __init__(self, width=800, height=300, about="", version="", help=""):
 
         # window options
+        super().__init__()
         self.__width = width
         self.__height = height
-        self.__root = Tk()
-        self.__root.geometry(f"{self.__width}x{self.__height}")
-        self.__root.title("Rectangle Collision")
-        self.__root.option_add("*tearOff", False)
+        self.geometry(f"{self.__width}x{self.__height}")
+        self.title("Rectangle Collision")
 
         # error label
         self.__errmsg = StringVar()
@@ -46,45 +53,54 @@ class RectangleCollision:
 
         # button for start action
         self.__acceptButton = Button(
-            self.__root, text="Accept data and start collision", command=self.__button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
+            self, text="Accept data and start collision", command=self.__button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
         self.__acceptButton.grid(
             column=0, row=4, columnspan=4, padx=10, pady=10)
 
         # canvas for drawing
         self.__canvas = Canvas(
-            self.__root, width=self.__width, height=self.__height, bg="white")
+            self, width=self.__width, height=self.__height, bg="white")
         self.__canvas.grid(column=0, row=6, columnspan=4)
         self.__rectangles = []
 
         # menu header
-        self.__main_menu = Menu(self.__root)
+        self.__about_message = about
+        self.__version_message = version
+        self.__help_message = help
+        self.__main_menu = Menu(self)
         self.__main_menu.add_command(label="About", command=self.__about)
+        self.__main_menu.add_command(label="Help", command=self.__help)
         self.__main_menu.add_command(label="Version", command=self.__version)
 
-        self.__root.config(menu=self.__main_menu)
+        self.config(menu=self.__main_menu)
 
         # bind for close app
-        self.__root.bind('<Escape>', self.__close_app)
+        self.bind('<Escape>', self.__close_app)
 
     def __about(self):
         """Show info about app.
         """
 
-        messagebox.showinfo(
-            "About", "A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity")
+        messagebox.showinfo("About", self.__about_message)
+
+    def __help(self):
+        """Show usage information.
+        """
+
+        messagebox.showinfo("Help", self.__help_message)
 
     def __version(self):
         """Show info about version app.
         """
 
-        messagebox.showinfo("Version", "v0.0.1")
+        messagebox.showinfo("Version", self.__version_message)
 
     def __button_create_handler(self):
         """Accept entry data and start the collision.
         """
 
         mass1 = self.__rec1_mass_entry.get()
-        mass2 = self.__rec1_mass_entry.get()
+        mass2 = self.__rec2_mass_entry.get()
         vel1 = self.__rec1_velocity_entry.get()
         vel2 = self.__rec2_velocity_entry.get()
         if (self._entry_input_validate(mass1) and self._entry_input_validate(mass2) and self._entry_input_validate(vel1) and self._entry_input_validate(vel2)):
@@ -104,7 +120,7 @@ class RectangleCollision:
         """
 
         result = re.match("^[1-9]{1}$", input_value) is not None
-        if not result and len(input_value) <= 12:
+        if not result:
             self.__errmsg.set(
                 "Each input field must be filled with a number from 1 to 9")
         else:
@@ -182,10 +198,10 @@ class RectangleCollision:
         """Destroy tkinter application.
         """
 
-        self.__root.destroy()
+        self.destroy()
 
     def start_app(self):
         """Start tkinter application.
         """
 
-        self.__root.mainloop()
+        self.mainloop()
