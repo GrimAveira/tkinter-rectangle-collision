@@ -1,5 +1,6 @@
+from Factory import Factory
 from RectangleCollision import RectangleCollision
 
 
-app = RectangleCollision()
+app = Factory.create(RectangleCollision)
 app.start_app()

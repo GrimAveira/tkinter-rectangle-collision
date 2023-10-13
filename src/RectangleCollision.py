@@ -3,6 +3,13 @@ from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry, messagebo
 
 
 class RectangleCollision(Tk):
+    """Class TextSplitter used to create a tkinter application
+
+    Shows the interaction of two rectangles with the entered data
+
+    Note:
+        There may be problems with setting large values in the fields
+    """
 
     def __init__(self, width=800, height=300, about="", version="", help=""):
 
