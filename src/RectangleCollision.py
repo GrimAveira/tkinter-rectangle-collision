@@ -2,15 +2,16 @@ import re
 from tkinter import Tk, Label, StringVar, Button, Canvas, Menu, Entry, messagebox
 
 
-class RectangleCollision:
+class RectangleCollision(Tk):
+
     def __init__(self, width=800, height=300, about="", version="", help=""):
 
         # window options
+        super().__init__()
         self.__width = width
         self.__height = height
-        self.__root = Tk()
-        self.__root.geometry(f"{self.__width}x{self.__height}")
-        self.__root.title("Rectangle Collision")
+        self.geometry(f"{self.__width}x{self.__height}")
+        self.title("Rectangle Collision")
 
         # error label
         self.__errmsg = StringVar()
@@ -45,13 +46,13 @@ class RectangleCollision:
 
         # button for start action
         self.__acceptButton = Button(
-            self.__root, text="Accept data and start collision", command=self.__button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
+            self, text="Accept data and start collision", command=self.__button_create_handler, font='Calibri 12', borderwidth="2", relief="solid")
         self.__acceptButton.grid(
             column=0, row=4, columnspan=4, padx=10, pady=10)
 
         # canvas for drawing
         self.__canvas = Canvas(
-            self.__root, width=self.__width, height=self.__height, bg="white")
+            self, width=self.__width, height=self.__height, bg="white")
         self.__canvas.grid(column=0, row=6, columnspan=4)
         self.__rectangles = []
 
@@ -59,15 +60,15 @@ class RectangleCollision:
         self.__about_message = about
         self.__version_message = version
         self.__help_message = help
-        self.__main_menu = Menu(self.__root)
+        self.__main_menu = Menu(self)
         self.__main_menu.add_command(label="About", command=self.__about)
         self.__main_menu.add_command(label="Help", command=self.__help)
         self.__main_menu.add_command(label="Version", command=self.__version)
 
-        self.__root.config(menu=self.__main_menu)
+        self.config(menu=self.__main_menu)
 
         # bind for close app
-        self.__root.bind('<Escape>', self.__close_app)
+        self.bind('<Escape>', self.__close_app)
 
     def __about(self):
         """Show info about app.
@@ -190,10 +191,10 @@ class RectangleCollision:
         """Destroy tkinter application.
         """
 
-        self.__root.destroy()
+        self.destroy()
 
     def start_app(self):
         """Start tkinter application.
         """
 
-        self.__root.mainloop()
+        self.mainloop()
