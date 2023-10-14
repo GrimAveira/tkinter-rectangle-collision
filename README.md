@@ -14,7 +14,7 @@
 
 ## Preview
 
-A Python application with tkinter that allows you to look at the collision of two rectangular bodies at a given mass and velocity
+A Python application with tkinter that allows you to look at the absolutely elastic collision of two rectangular bodies at a given mass and velocity
 
 ![Watch the video](./img/RectangleCollision.gif)
 
